@@ -1,0 +1,1828 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Syed Mustafa Ali — Innovation · AI · Agentic AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Public+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* ============================================================
+   TWEAKABLE TOKENS — edited live via Tweaks panel
+   ============================================================ */
+:root {
+  --bg:        #F2EDE4;        /* warm bone */
+  --bg-2:      #EBE4D7;        /* slight contrast strip */
+  --ink:       #14110F;        /* deep ink */
+  --ink-soft:  #3A3530;
+  --muted:     #7A726A;
+  --line:      #1411101A;
+  --accent:    #B14225;        /* burnt sienna */
+  --accent-ink:#5C1E0D;
+
+  --pad-section: clamp(80px, 12vw, 160px);
+  --pad-x:       clamp(28px, 6vw, 96px);
+  --pad-x-left:  clamp(28px, 6vw, 96px);
+  --gutter:      clamp(20px, 2.4vw, 36px);
+
+  --serif:    'Instrument Serif', 'Times New Roman', serif;
+  --sans:     'Public Sans', system-ui, -apple-system, sans-serif;
+  --mono:     'JetBrains Mono', ui-monospace, Menlo, monospace;
+}
+
+[data-theme="ink"] {
+  --bg:        #0E0D0C;
+  --bg-2:      #16140F;
+  --ink:       #F2ECDF;
+  --ink-soft:  #C9C0AE;
+  --muted:     #8C8275;
+  --line:      #F2ECDF1F;
+  --accent:    #E96A3D;
+  --accent-ink:#FFB892;
+}
+
+[data-theme="paper"] {
+  --bg:        #FAF8F2;
+  --bg-2:      #F2EDE0;
+  --ink:       #1A1814;
+  --ink-soft:  #3F3A33;
+  --muted:     #7E7569;
+  --line:      #1A18141A;
+  --accent:    #2A4A3C;
+  --accent-ink:#163025;
+}
+
+[data-density="compact"] {
+  --pad-section: clamp(60px, 8vw, 110px);
+}
+[data-density="airy"] {
+  --pad-section: clamp(120px, 16vw, 220px);
+}
+
+/* ============================================================
+   RESET + BASE
+   ============================================================ */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.55;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "ss01", "cv01";
+  overflow-x: hidden;
+  transition: background-color .4s ease, color .4s ease;
+}
+::selection { background: var(--accent); color: var(--bg); }
+
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+img, svg { display: block; max-width: 100%; }
+
+.serif  { font-family: var(--serif); font-weight: 400; }
+.italic { font-style: italic; }
+.mono   { font-family: var(--mono); font-weight: 400; letter-spacing: -.01em; }
+.upper  { text-transform: uppercase; letter-spacing: .14em; font-size: 11px; font-weight: 500; }
+.muted  { color: var(--muted); }
+.accent { color: var(--accent); }
+
+/* ============================================================
+   LAYOUT GRID
+   ============================================================ */
+.shell {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  min-height: 100vh;
+}
+@media (max-width: 900px) {
+  .shell { grid-template-columns: 1fr; }
+}
+
+/* Sticky side nav */
+.sidebar {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  padding: 36px 28px;
+  border-right: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: var(--bg);
+  z-index: 10;
+}
+@media (max-width: 900px) {
+  .sidebar {
+    position: sticky; top: 0; height: auto;
+    padding: 16px var(--pad-x);
+    flex-direction: row;
+    border-right: 0; border-bottom: 1px solid var(--line);
+    align-items: center;
+  }
+}
+
+.brand {
+  font-family: var(--serif);
+  font-size: 22px;
+  line-height: 1.05;
+  letter-spacing: -.01em;
+}
+.brand small {
+  display: block;
+  font-family: var(--mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: .18em;
+  color: var(--muted);
+  margin-top: 6px;
+}
+
+.nav {
+  margin-top: 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+@media (max-width: 900px) { .nav { display: none; } }
+.nav a {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  transition: color .2s ease;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.nav a::before {
+  content: "";
+  width: 14px; height: 1px;
+  background: currentColor;
+  opacity: .4;
+  transition: width .25s ease, opacity .25s ease;
+}
+.nav a:hover, .nav a.active {
+  color: var(--ink);
+}
+.nav a.active::before { width: 28px; opacity: 1; background: var(--accent); }
+
+.side-meta {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  line-height: 1.8;
+}
+@media (max-width: 900px) { .side-meta { display: none; } }
+
+.main { min-width: 0; }
+
+/* ============================================================
+   SECTION RHYTHM
+   ============================================================ */
+section {
+  padding: var(--pad-section) var(--pad-x);
+  border-bottom: 1px solid var(--line);
+  position: relative;
+}
+section:last-of-type { border-bottom: 0; }
+
+.section-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .2em;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 48px;
+}
+.section-label::before {
+  content: "";
+  width: 36px;
+  height: 1px;
+  background: var(--accent);
+}
+.section-label .num { color: var(--accent); }
+
+.eyebrow {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero {
+  min-height: calc(100vh - 0px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-top: clamp(40px, 8vh, 96px);
+  padding-bottom: clamp(40px, 8vh, 96px);
+  border-bottom: 1px solid var(--line);
+}
+.hero-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.hero-top .available {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 0 var(--accent);
+  animation: pulse 2.2s ease-out infinite;
+}
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 color-mix(in oklch, var(--accent) 55%, transparent); }
+  70% { box-shadow: 0 0 0 12px color-mix(in oklch, var(--accent) 0%, transparent); }
+  100% { box-shadow: 0 0 0 0 transparent; }
+}
+
+.hero-name {
+  font-family: var(--serif);
+  font-size: clamp(54px, 10vw, 168px);
+  line-height: .92;
+  letter-spacing: -.025em;
+  margin-top: clamp(40px, 8vh, 80px);
+  font-weight: 400;
+}
+.hero-name .ampersand {
+  font-style: italic;
+  color: var(--accent);
+}
+
+.hero-roles {
+  margin-top: clamp(32px, 5vh, 56px);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(24px, 4vw, 64px);
+  align-items: end;
+}
+@media (max-width: 800px) { .hero-roles { grid-template-columns: 1fr; } }
+
+.role-rotator {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(28px, 4.2vw, 56px);
+  line-height: 1.05;
+  color: var(--ink);
+  letter-spacing: -.015em;
+  min-height: 1.2em;
+}
+.role-rotator .line {
+  display: block;
+  position: relative;
+}
+.role-rotator .pos {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity .55s ease, transform .55s ease;
+}
+.role-rotator .pos.active {
+  position: relative;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hero-tagline {
+  font-size: 17px;
+  line-height: 1.55;
+  max-width: 38ch;
+  color: var(--ink-soft);
+}
+.hero-tagline strong { font-weight: 500; color: var(--ink); }
+
+.hero-bottom {
+  margin-top: clamp(40px, 6vh, 80px);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.hero-bottom .meta-block {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  line-height: 1.9;
+}
+.hero-bottom .meta-block strong {
+  color: var(--ink);
+  font-weight: 500;
+  display: block;
+  margin-top: 4px;
+}
+.scroll-cue {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+}
+.scroll-cue::after {
+  content: "";
+  width: 1px; height: 36px;
+  background: var(--ink);
+  opacity: .4;
+  animation: drop 2.6s ease-in-out infinite;
+  transform-origin: top;
+}
+@keyframes drop {
+  0%, 100% { transform: scaleY(0); }
+  50% { transform: scaleY(1); }
+}
+
+/* ============================================================
+   STATS MARQUEE
+   ============================================================ */
+.stats {
+  padding: 0;
+  border-bottom: 1px solid var(--line);
+  background: var(--bg-2);
+  overflow: hidden;
+}
+.stats-inner {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  align-items: stretch;
+}
+@media (max-width: 1000px) { .stats-inner { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 560px)  { .stats-inner { grid-template-columns: repeat(2, 1fr); } }
+
+.stat {
+  padding: 40px 24px;
+  border-right: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 180px;
+  justify-content: flex-end;
+  position: relative;
+  overflow: hidden;
+}
+.stat:last-child { border-right: 0; }
+@media (max-width: 1000px) {
+  .stat:nth-child(3n) { border-right: 0; }
+  .stat { border-bottom: 1px solid var(--line); }
+}
+@media (max-width: 560px) {
+  .stat:nth-child(2n) { border-right: 0; }
+  .stat:nth-child(3n) { border-right: 1px solid var(--line); }
+}
+
+.stat .num {
+  font-family: var(--serif);
+  font-size: clamp(48px, 6.5vw, 84px);
+  line-height: .92;
+  letter-spacing: -.02em;
+}
+.stat .num .unit {
+  font-size: .42em;
+  font-family: var(--mono);
+  letter-spacing: 0;
+  color: var(--accent);
+  margin-left: 2px;
+  vertical-align: top;
+  position: relative;
+  top: .5em;
+}
+.stat .label {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+/* ============================================================
+   ABOUT
+   ============================================================ */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: clamp(40px, 6vw, 120px);
+  align-items: start;
+}
+@media (max-width: 900px) { .about-grid { grid-template-columns: 1fr; } }
+
+.about-mark {
+  font-family: var(--serif);
+  font-size: clamp(120px, 22vw, 280px);
+  line-height: .85;
+  letter-spacing: -.04em;
+  color: var(--ink);
+  position: sticky;
+  top: 80px;
+}
+.about-mark .small {
+  display: block;
+  font-size: .2em;
+  font-family: var(--mono);
+  text-transform: uppercase;
+  letter-spacing: .2em;
+  color: var(--muted);
+  margin-top: 24px;
+  line-height: 1.7;
+}
+
+.about-prose p {
+  font-family: var(--serif);
+  font-size: clamp(22px, 2.4vw, 32px);
+  line-height: 1.32;
+  letter-spacing: -.01em;
+  color: var(--ink);
+  margin-bottom: 28px;
+}
+.about-prose p + p {
+  font-family: var(--sans);
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--ink-soft);
+  font-weight: 400;
+  letter-spacing: 0;
+}
+.about-prose p .accent {
+  font-style: italic;
+  color: var(--accent);
+}
+
+.philosophy {
+  margin-top: 56px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+@media (max-width: 700px) { .philosophy { grid-template-columns: 1fr; } }
+.philosophy .cell {
+  background: var(--bg);
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.philosophy .cell .k {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.philosophy .cell .v {
+  font-family: var(--serif);
+  font-size: 22px;
+  line-height: 1.25;
+  letter-spacing: -.01em;
+}
+
+/* ============================================================
+   SELECTED WORK
+   ============================================================ */
+.work-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px;
+  margin-bottom: 64px;
+  flex-wrap: wrap;
+}
+.work-title {
+  font-family: var(--serif);
+  font-size: clamp(48px, 7vw, 96px);
+  line-height: .95;
+  letter-spacing: -.025em;
+  max-width: 14ch;
+}
+.work-title .italic { color: var(--accent); }
+.work-meta {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-align: right;
+  line-height: 1.8;
+}
+
+.cases {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.case {
+  display: grid;
+  grid-template-columns: 100px 1fr 1.2fr;
+  gap: clamp(20px, 3vw, 56px);
+  padding: 40px 0;
+  border-top: 1px solid var(--line);
+  position: relative;
+  cursor: pointer;
+  transition: padding .35s ease;
+}
+.case:last-child { border-bottom: 1px solid var(--line); }
+@media (max-width: 900px) {
+  .case { grid-template-columns: 1fr; gap: 16px; }
+}
+
+.case .idx {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding-top: 8px;
+}
+.case .idx .n { display: block; color: var(--ink); font-size: 14px; margin-bottom: 6px; }
+
+.case .h {
+  font-family: var(--serif);
+  font-size: clamp(28px, 3.4vw, 44px);
+  line-height: 1.05;
+  letter-spacing: -.02em;
+  color: var(--ink);
+  padding-top: 4px;
+}
+.case .h .tag {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-top: 14px;
+  padding: 0;
+}
+
+.case .body {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.case .body p {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+.case .body .kv {
+  display: grid;
+  grid-template-columns: 86px 1fr;
+  gap: 12px 16px;
+  font-size: 14px;
+  margin-top: 6px;
+}
+.case .body .kv dt {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding-top: 3px;
+}
+.case .body .kv dd {
+  color: var(--ink);
+  line-height: 1.5;
+}
+.case .body .kv dd strong { color: var(--accent); font-weight: 500; }
+
+.case:hover .h { color: var(--accent); transition: color .25s ease; }
+
+.case-arrow {
+  position: absolute;
+  right: 0;
+  top: 40px;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 22px;
+  color: var(--muted);
+  opacity: 0;
+  transform: translateX(-12px);
+  transition: opacity .25s ease, transform .25s ease;
+}
+.case:hover .case-arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+@media (max-width: 900px) { .case-arrow { display: none; } }
+
+/* ============================================================
+   METHOD
+   ============================================================ */
+.method-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  border-top: 1px solid var(--line);
+  border-left: 1px solid var(--line);
+}
+@media (max-width: 900px) { .method-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 540px) { .method-grid { grid-template-columns: 1fr; } }
+
+.method-cell {
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 36px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  min-height: 280px;
+  position: relative;
+  transition: background-color .25s ease;
+}
+.method-cell:hover { background: var(--bg-2); }
+.method-cell .step {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.method-cell .step .n {
+  color: var(--muted);
+  margin-right: 8px;
+}
+.method-cell h3 {
+  font-family: var(--serif);
+  font-size: 28px;
+  line-height: 1.1;
+  letter-spacing: -.015em;
+  font-weight: 400;
+}
+.method-cell p {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+.method-cell ul {
+  list-style: none;
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.method-cell ul li {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ============================================================
+   TIMELINE
+   ============================================================ */
+.timeline-grid {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: clamp(24px, 4vw, 72px);
+}
+@media (max-width: 800px) { .timeline-grid { grid-template-columns: 1fr; } }
+
+.timeline-aside {
+  position: sticky;
+  top: 80px;
+  align-self: start;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  line-height: 1.9;
+}
+.timeline-aside strong {
+  display: block;
+  font-family: var(--serif);
+  font-size: 56px;
+  line-height: .9;
+  letter-spacing: -.02em;
+  color: var(--ink);
+  font-weight: 400;
+  margin-bottom: 16px;
+  text-transform: none;
+}
+
+.tl {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+.tl li {
+  padding: 32px 0 36px;
+  border-top: 1px solid var(--line);
+  display: grid;
+  grid-template-columns: 130px 1fr;
+  gap: 24px;
+}
+.tl li:last-child { border-bottom: 1px solid var(--line); }
+@media (max-width: 700px) { .tl li { grid-template-columns: 1fr; gap: 8px; } }
+
+.tl .when {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  padding-top: 6px;
+}
+.tl .role {
+  font-family: var(--serif);
+  font-size: 26px;
+  line-height: 1.18;
+  letter-spacing: -.01em;
+}
+.tl .role .at {
+  display: block;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 8px;
+}
+.tl .desc {
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  margin-top: 14px;
+  max-width: 60ch;
+}
+
+/* ============================================================
+   RECOGNITION & SPEAKING (split)
+   ============================================================ */
+.split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+@media (max-width: 800px) { .split { grid-template-columns: 1fr; } }
+.split > div {
+  background: var(--bg);
+  padding: 40px 32px;
+  min-height: 280px;
+}
+.split h3 {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 28px;
+}
+.split ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.split ul li {
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--serif);
+  font-size: 20px;
+  line-height: 1.25;
+  letter-spacing: -.005em;
+}
+.split ul li:last-child { border-bottom: 0; }
+.split ul li small {
+  display: block;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 8px;
+}
+
+/* ============================================================
+   CREDENTIALS
+   ============================================================ */
+.creds {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: clamp(28px, 4vw, 72px);
+}
+@media (max-width: 900px) { .creds { grid-template-columns: 1fr; } }
+.creds h3 {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--line);
+}
+.creds ul { list-style: none; display: flex; flex-direction: column; gap: 18px; }
+.creds ul li {
+  font-family: var(--serif);
+  font-size: 19px;
+  line-height: 1.28;
+  letter-spacing: -.005em;
+}
+.creds ul li small {
+  display: block;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 6px;
+}
+
+/* ============================================================
+   CONTACT / CTA
+   ============================================================ */
+.contact {
+  padding-top: clamp(80px, 12vw, 160px);
+  padding-bottom: clamp(80px, 12vw, 160px);
+}
+.contact-line {
+  font-family: var(--serif);
+  font-size: clamp(40px, 7.5vw, 120px);
+  line-height: .95;
+  letter-spacing: -.025em;
+  margin-bottom: clamp(48px, 8vw, 96px);
+}
+.contact-line .italic { color: var(--accent); }
+.contact-line a {
+  position: relative;
+  display: inline-block;
+}
+.contact-line a::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 8%;
+  height: 3px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .4s ease;
+}
+.contact-line a:hover::after { transform: scaleX(1); }
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--line);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+@media (max-width: 800px) { .contact-grid { grid-template-columns: 1fr; } }
+.contact-grid > div {
+  background: var(--bg);
+  padding: 32px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.contact-grid .k {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.contact-grid .v {
+  font-family: var(--serif);
+  font-size: 22px;
+  line-height: 1.2;
+}
+.contact-grid a.v { transition: color .2s ease; }
+.contact-grid a.v:hover { color: var(--accent); }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.foot {
+  padding: 28px var(--pad-x);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  border-top: 1px solid var(--line);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  flex-wrap: wrap;
+}
+
+/* ============================================================
+   TWEAKS PANEL
+   ============================================================ */
+.tweaks {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 280px;
+  background: var(--bg);
+  border: 1px solid var(--ink);
+  box-shadow: 0 24px 60px -20px rgba(0,0,0,.25);
+  z-index: 9999;
+  padding: 18px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--ink);
+  display: none;
+}
+.tweaks.open { display: block; }
+.tweaks header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line);
+}
+.tweaks h4 { font: inherit; }
+.tweaks .close {
+  font-family: var(--serif);
+  font-size: 18px;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: 0;
+}
+.tweaks .group { margin-bottom: 14px; }
+.tweaks .group > label {
+  display: block;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.tweaks .swatches {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+.tweaks .swatches button {
+  height: 36px;
+  border: 1px solid var(--line);
+  position: relative;
+  padding: 6px;
+  display: flex;
+  align-items: flex-end;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+.tweaks .swatches button[aria-pressed="true"] {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+.tweaks .seg {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border: 1px solid var(--line);
+}
+.tweaks .seg button {
+  padding: 8px 6px;
+  border-right: 1px solid var(--line);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.tweaks .seg button:last-child { border-right: 0; }
+.tweaks .seg button[aria-pressed="true"] {
+  background: var(--ink);
+  color: var(--bg);
+}
+
+/* ============================================================
+   REVEAL ON SCROLL
+   ============================================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity .9s ease, transform .9s ease;
+}
+.reveal.in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============================================================
+   PRINT
+   ============================================================ */
+@media print {
+  .sidebar, .tweaks, .scroll-cue, .available { display: none; }
+  body { background: white; color: black; }
+}
+</style>
+</head>
+<body data-theme="bone" data-density="default">
+
+<div class="shell">
+
+  <!-- =================== SIDE NAV =================== -->
+  <aside class="sidebar">
+    <div>
+      <div class="brand">
+        S. M. Ali<small>Innovation · AI · Agentic AI</small>
+      </div>
+      <nav class="nav" id="nav">
+        <a href="#work" data-section="work">Selected Work</a>
+        <a href="#about" data-section="about">Approach</a>
+        <a href="#method" data-section="method">Method</a>
+        <a href="#journey" data-section="journey">Journey</a>
+        <a href="#recognition" data-section="recognition">Recognition</a>
+        <a href="#credentials" data-section="credentials">Credentials</a>
+        <a href="#contact" data-section="contact">Contact</a>
+      </nav>
+    </div>
+    <div class="side-meta">
+      Brussels<br>
+      EN · NL (A2)<br>
+      <span class="accent">●</span> Open to roles
+    </div>
+  </aside>
+
+  <!-- =================== MAIN =================== -->
+  <main class="main">
+
+    <!-- ============ HERO ============ -->
+    <section class="hero" id="top">
+      <div class="hero-top">
+        <div class="upper">
+          <span class="accent">●</span> &nbsp; Portfolio · MMXXVI
+        </div>
+        <div class="available">
+          <span class="dot"></span> Open to new mandates · Q3 2026
+        </div>
+      </div>
+
+      <h1 class="hero-name">
+        Syed Mustafa<br>
+        Ali<span class="ampersand">.</span>
+      </h1>
+
+      <div class="hero-roles">
+        <div class="role-rotator" id="rotator" aria-live="polite">
+          <span class="line">
+            <span class="pos active">Innovation.</span>
+            <span class="pos">AI Strategy.</span>
+            <span class="pos">Agentic AI.</span>
+            <span class="pos">Digital Transformation.</span>
+            <span class="pos">Venture Building.</span>
+          </span>
+        </div>
+        <p class="hero-tagline">
+          <strong>14-year</strong> enterprise career — the last <strong>7+</strong> leading AI and digital transformation programmes inside large regulated organisations, from blank page to production. Embedded in Brussels, building from the inside out.
+        </p>
+      </div>
+
+      <div class="hero-bottom">
+        <div class="meta-block">
+          Currently
+          <strong>Embedded Innovation Lead, National Rail Operator</strong>
+        </div>
+        <div class="meta-block" style="text-align:right">
+          Working between
+          <strong>Business · IT · Hyperscalers · Field Operations</strong>
+        </div>
+      </div>
+
+      <div class="hero-bottom" style="margin-top:24px">
+        <div class="scroll-cue">Scroll &nbsp;/&nbsp; Selected work</div>
+        <div class="upper muted">No. 01 — Brussels, Belgium</div>
+      </div>
+    </section>
+
+    <!-- ============ STATS ============ -->
+    <section class="stats" style="padding:0;border-top:0">
+      <div class="stats-inner">
+        <div class="stat">
+          <div class="num">14<span class="unit">yrs</span></div>
+          <div class="label">Enterprise<br>Career</div>
+        </div>
+        <div class="stat">
+          <div class="num">32<span class="unit">+</span></div>
+          <div class="label">Proofs of<br>Concept Delivered</div>
+        </div>
+        <div class="stat">
+          <div class="num">6</div>
+          <div class="label">Ventures Scaled<br>to Production</div>
+        </div>
+        <div class="stat">
+          <div class="num">10<span class="unit">+</span></div>
+          <div class="label">C-Level<br>Business Cases</div>
+        </div>
+        <div class="stat">
+          <div class="num">8<span class="unit">M€</span></div>
+          <div class="label">Flagship<br>Programme Scale</div>
+        </div>
+        <div class="stat">
+          <div class="num">500<span class="unit">+</span></div>
+          <div class="label">Innovation Day<br>Participants</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ ABOUT ============ -->
+    <section id="about">
+      <div class="section-label"><span class="num">02</span> · Approach</div>
+
+      <div class="about-grid">
+        <div class="about-mark">
+          Ɐ<small>Innovation,<br>but disciplined.</small>
+        </div>
+
+        <div class="about-prose">
+          <p>
+            I help large, regulated organisations turn <span class="accent">ambiguity</span> into funded, shipped, measurable outcomes — not slide decks.
+          </p>
+          <p>
+            Currently embedded inside a national rail operator's innovation ecosystem as a portfolio lead, I shape and steer a multi-modal AI and data agenda spanning GenAI, Computer Vision, IoT, satellite imagery, Agentic AI, and immersive training. Before that, I spent four years inside the research and innovation office of a global technology services group — evangelising emerging AI to a hundred-plus Fortune 500 customers and taking products from TRL-1 concept through TRL-6 customer deployment.
+          </p>
+          <p>
+            I operate without direct line authority. I deliver through structured discovery, evidence-based business cases, and the kind of patient stakeholder choreography that turns an executive "interesting" into a funded programme. I keep the engineering people honest about business value, and the business people honest about engineering constraints.
+          </p>
+
+          <div class="philosophy">
+            <div class="cell">
+              <div class="k">Operating principle 01</div>
+              <div class="v">Discover before you commit.</div>
+            </div>
+            <div class="cell">
+              <div class="k">Operating principle 02</div>
+              <div class="v">Business problem first. Technology second.</div>
+            </div>
+            <div class="cell">
+              <div class="k">Operating principle 03</div>
+              <div class="v">Influence over authority. Always.</div>
+            </div>
+            <div class="cell">
+              <div class="k">Operating principle 04</div>
+              <div class="v">Kill PoCs early. Ship the survivors.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SELECTED WORK ============ -->
+    <section id="work">
+      <div class="work-head">
+        <h2 class="work-title">Selected <span class="italic">work</span>, anonymised by request.</h2>
+        <div class="work-meta">
+          Six of ~32 PoCs<br>
+          Belgium · EU · IN
+        </div>
+      </div>
+
+      <div class="cases">
+
+        <article class="case">
+          <div class="idx">
+            <span class="n">/01</span>
+            2024 — Live
+          </div>
+          <div class="h">
+            GenAI assistant for a 1M+ user passenger app.
+            <span class="tag">B2C · GenAI · Production</span>
+          </div>
+          <div class="body">
+            <p>Identified the GenAI inflection point ahead of the organisation, ran monthly working sessions, aligned siloed B2B and B2C stakeholders, and built the funded business case. Led delivery execution from prompt design to production rollout.</p>
+            <dl class="kv">
+              <dt>Problem</dt><dd>Rising support volume, fragmented self-service across two business units, no shared AI mandate.</dd>
+              <dt>Approach</dt><dd>Discovery sprint → business case → cross-BU alignment → hyperscaler co-innovation → staged rollout.</dd>
+              <dt>Outcome</dt><dd><strong>+20% improvement</strong> in customer query resolution. In production.</dd>
+            </dl>
+            <span class="case-arrow">→</span>
+          </div>
+        </article>
+
+        <article class="case">
+          <div class="idx">
+            <span class="n">/02</span>
+            2023 — Active pilot
+          </div>
+          <div class="h">
+            €8M multi-modal operational intelligence programme.
+            <span class="tag">CV · IoT · Satellite · Flagship</span>
+          </div>
+          <div class="body">
+            <p>Reframed a €7M+ annual operational-cost line item from "physical asset problem" into a converged data platform — Computer Vision for asset condition, IoT seismic sensors for intrusion, satellite imagery for early warning. Discovery revealed the same sensor investment could serve operations and maintenance teams with full rolling-stock condition metadata.</p>
+            <dl class="kv">
+              <dt>Problem</dt><dd>Recurring vandalism and asset degradation treated as a cost, never as a data problem.</dd>
+              <dt>Approach</dt><dd>Multi-modal data strategy; partnered with hyperscaler, GPU vendor, industrial automation partner, sensor ecosystem across two countries.</dd>
+              <dt>Outcome</dt><dd>Computer Vision track in <strong>active pilot</strong>; IoT track <strong>delivered</strong>; enterprise rollout under consideration.</dd>
+            </dl>
+            <span class="case-arrow">→</span>
+          </div>
+        </article>
+
+        <article class="case">
+          <div class="idx">
+            <span class="n">/03</span>
+            2025 — Funded
+          </div>
+          <div class="h">
+            Agentic AI for autonomous L1 operations support.
+            <span class="tag">Agentic · Architecture · Funded</span>
+          </div>
+          <div class="body">
+            <p>Designed a five-layer agentic AI reference architecture for autonomous L1 operations — framing the regulatory and governance boundaries needed to move from human-primary to machine-primary operating model. Presented and secured CXO funding.</p>
+            <dl class="kv">
+              <dt>Problem</dt><dd>L1 operations bottlenecked by human throughput; no governed pattern for agent delegation.</dd>
+              <dt>Approach</dt><dd>5-layer architecture, EU AI Act-aligned guardrails, co-innovation with hyperscaler partner.</dd>
+              <dt>Outcome</dt><dd><strong>Funded programme</strong> approved by CXO leadership.</dd>
+            </dl>
+            <span class="case-arrow">→</span>
+          </div>
+        </article>
+
+        <article class="case">
+          <div class="idx">
+            <span class="n">/04</span>
+            2022–2024
+          </div>
+          <div class="h">
+            A parallel innovation pipeline that broke a 2-year IT backlog.
+            <span class="tag">Intrapreneurship · Governance · Scaled</span>
+          </div>
+          <div class="body">
+            <p>The innovation lab identified a structural problem: a two-year IT backlog blocking digital experience improvements. I supported building a parallel pipeline with lightweight governance — fast enough to validate, structured enough to hand back to industrialisation cleanly.</p>
+            <dl class="kv">
+              <dt>Problem</dt><dd>Two-year IT backlog smothering customer-experience innovation.</dd>
+              <dt>Approach</dt><dd>Lightweight stage-gates; vendor-led prototyping; clear handover criteria to mainline IT.</dd>
+              <dt>Outcome</dt><dd><strong>~12 PoCs shipped</strong>; multiple features now live in the flagship customer app.</dd>
+            </dl>
+            <span class="case-arrow">→</span>
+          </div>
+        </article>
+
+        <article class="case">
+          <div class="idx">
+            <span class="n">/05</span>
+            2022 — Delivered
+          </div>
+          <div class="h">
+            Immersive VR training for field operations staff.
+            <span class="tag">AR / VR · Training · PoC</span>
+          </div>
+          <div class="body">
+            <p>Led the technical and SME team to deliver an immersive VR training proof-of-concept for safety-critical field roles. Cut infrastructure and on-site training cost while maintaining knowledge-transfer quality validated by operations leads.</p>
+            <dl class="kv">
+              <dt>Problem</dt><dd>High-cost, low-throughput physical training environment for safety-critical roles.</dd>
+              <dt>Approach</dt><dd>Co-design with SMEs; VR scenario authoring; pilot evaluation framework.</dd>
+              <dt>Outcome</dt><dd><strong>Cost reduction</strong> without quality loss; pattern reused by adjacent training programmes.</dd>
+            </dl>
+            <span class="case-arrow">→</span>
+          </div>
+        </article>
+
+        <article class="case">
+          <div class="idx">
+            <span class="n">/06</span>
+            2018–2021
+          </div>
+          <div class="h">
+            A document-extraction product taken from blank page to market.
+            <span class="tag">Product · IP · Go-to-Market</span>
+          </div>
+          <div class="body">
+            <p>Identified a 10–15 year unsolved data-extraction problem in engineering and utilities. Validated demand via analyst relations and RFP pipeline analysis. Coordinated data science, legal, IP, marketing, and a launch client to industrialise.</p>
+            <dl class="kv">
+              <dt>Problem</dt><dd>Permit approval cycles taking 3+ days for a launch utilities customer.</dd>
+              <dt>Approach</dt><dd>Concept → analyst validation → IP strategy → co-development with launch customer.</dd>
+              <dt>Outcome</dt><dd>Approval cycles compressed to <strong>under 1 day</strong>; product deployed across multiple geographies.</dd>
+            </dl>
+            <span class="case-arrow">→</span>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ============ METHOD ============ -->
+    <section id="method">
+      <div class="section-label"><span class="num">04</span> · Method</div>
+
+      <div class="work-head" style="margin-bottom: 56px">
+        <h2 class="work-title">The four <span class="italic">moves</span> behind every shipped venture.</h2>
+        <div class="work-meta">Stage-gated.<br>Discovery-first.<br>Influence-led.</div>
+      </div>
+
+      <div class="method-grid">
+        <div class="method-cell">
+          <div class="step"><span class="n">01</span> Discover</div>
+          <h3>Validate the problem before the technology.</h3>
+          <p>Structured as-is / to-be sprints, stakeholder interviews, process walk-throughs, and operational data analysis — before any commitment to build.</p>
+          <ul>
+            <li>— Design Thinking</li>
+            <li>— Discovery sprints</li>
+            <li>— Process mapping</li>
+          </ul>
+        </div>
+        <div class="method-cell">
+          <div class="step"><span class="n">02</span> Frame</div>
+          <h3>A funded business case, in business language.</h3>
+          <p>Translate engineering constraints into commercial framing and executive ambitions into AI architecture decisions. Build / buy / partner analysis on every track.</p>
+          <ul>
+            <li>— ROI framing</li>
+            <li>— Build/buy/partner</li>
+            <li>— C-level alignment</li>
+          </ul>
+        </div>
+        <div class="method-cell">
+          <div class="step"><span class="n">03</span> Deliver</div>
+          <h3>Stage-gated PoC → pilot → pre-industrialisation.</h3>
+          <p>Scope, milestones, risk register, budget framework. SAFe-6 PI cadence for portfolio coordination. Stage-gates ensure each phase delivers learning before the next.</p>
+          <ul>
+            <li>— SAFe 6 APM · POPM</li>
+            <li>— Risk + budget governance</li>
+            <li>— Vendor orchestration</li>
+          </ul>
+        </div>
+        <div class="method-cell">
+          <div class="step"><span class="n">04</span> Hand off</div>
+          <h3>Production readiness, not pilot purgatory.</h3>
+          <p>Pre-industrialisation handover with clear criteria. Sunset under-performers. Reallocate capacity to what's working. 6 of ~32 PoCs scaled with 80%+ adoption.</p>
+          <ul>
+            <li>— Handover governance</li>
+            <li>— Adoption tracking</li>
+            <li>— Kill decisions</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ JOURNEY ============ -->
+    <section id="journey">
+      <div class="section-label"><span class="num">05</span> · Journey</div>
+
+      <div class="timeline-grid">
+        <aside class="timeline-aside">
+          <strong>2011 →<br>now</strong>
+          Fourteen years.<br>
+          One operating system:<br>
+          <span class="accent">curiosity, discipline,<br>delivery.</span>
+        </aside>
+
+        <ol class="tl">
+          <li>
+            <div class="when">Dec 2021 — present</div>
+            <div>
+              <div class="role">
+                Embedded Innovation &amp; AI Portfolio Lead
+                <span class="at">A national rail operator · via a global IT services group · Brussels</span>
+              </div>
+              <p class="desc">
+                Shape and steer the AI &amp; data product roadmap across 12+ concurrent tracks. Discovery before commitment, business case before build, kill decisions when needed. 6 ventures scaled to production with 80%+ adoption. Dual role with pan-European pre-sales innovation advisory across Benelux, UK, and Nordic markets.
+              </p>
+            </div>
+          </li>
+          <li>
+            <div class="when">Jun 2017 — Nov 2021</div>
+            <div>
+              <div class="role">
+                AI Product Strategist &amp; Innovation Evangelist
+                <span class="at">CTO / Research &amp; Innovation Office · Europe + India</span>
+              </div>
+              <p class="desc">
+                Senior data and AI strategy role across 100+ Fortune 500 clients in BFSI, Telecom, Utilities, Manufacturing, Life Sciences, and Public Services. Owned Conversational AI and Computer Vision portfolios from TRL-1 through TRL-6. Built and mentored 30+ Innovation Champions across Europe and the US.
+              </p>
+            </div>
+          </li>
+          <li>
+            <div class="when">Jun 2016 — Jun 2017</div>
+            <div>
+              <div class="role">
+                Pre-Sales Consultant · Public Services
+                <span class="at">International Geo Unit · New Delhi</span>
+              </div>
+              <p class="desc">
+                Led end-to-end bid management and RFP/RFI response for public-services accounts. Delivered solution presentations to C-level audiences; built sales collateral that lifted win-rate in the vertical.
+              </p>
+            </div>
+          </li>
+          <li>
+            <div class="when">Jun 2014 — Jun 2015</div>
+            <div>
+              <div class="role">
+                Marketing Manager
+                <span class="at">New Delhi</span>
+              </div>
+              <p class="desc">
+                Go-to-market campaigns for product and service lines; competitive analysis; marketing collateral and case studies across BFSI, Public Services, and Manufacturing.
+              </p>
+            </div>
+          </li>
+          <li>
+            <div class="when">Dec 2013 — May 2014</div>
+            <div>
+              <div class="role">
+                Project Management Office
+                <span class="at">A European pharmaceutical manufacturer · Noida</span>
+              </div>
+              <p class="desc">
+                Concurrent project portfolio for a leading European pharma client; plans, schedules, budgets, financial accuracy.
+              </p>
+            </div>
+          </li>
+          <li>
+            <div class="when">Oct 2011 — Nov 2013</div>
+            <div>
+              <div class="role">
+                Business Analyst
+                <span class="at">New Delhi</span>
+              </div>
+              <p class="desc">
+                Requirements gathering, functional specifications, UAT support, post-implementation reviews. Where the discipline started.
+              </p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ============ RECOGNITION & SPEAKING ============ -->
+    <section id="recognition">
+      <div class="section-label"><span class="num">06</span> · Recognition &amp; Stage</div>
+
+      <div class="work-head" style="margin-bottom: 56px">
+        <h2 class="work-title">Awards, <span class="italic">stages,</span> and seats at the table.</h2>
+      </div>
+
+      <div class="split">
+        <div>
+          <h3>Honours &amp; Awards</h3>
+          <ul>
+            <li>
+              1st Place — Innovation &amp; Entrepreneurship Programme
+              <small>IIT Madras · 2024 · Sustainable packaging concept, prototyped end-to-end</small>
+            </li>
+            <li>
+              Innovation Superstar Award
+              <small>Research &amp; Innovation · Global IT services group</small>
+            </li>
+            <li>
+              Guru Gala Mentorship Award
+              <small>Global IT services group</small>
+            </li>
+            <li>
+              Dr. J. K. Paul Award
+              <small>Academic excellence · Computer Science</small>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h3>Stage &amp; Policy</h3>
+          <ul>
+            <li>
+              Active Policy Contributor — EU AI Act
+              <small>EU Futurium · AI Alliance · Ongoing</small>
+            </li>
+            <li>
+              Presenter — Mechelen Science Day
+              <small>Technopolis · 2022 – 2025</small>
+            </li>
+            <li>
+              Jury Member — University Hackathon
+              <small>160+ student participants · Belgium</small>
+            </li>
+            <li>
+              Facilitator — 8+ Hackathons, Ideathons, Innovation Days
+              <small>500+ participants across operational and technical teams</small>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CREDENTIALS ============ -->
+    <section id="credentials">
+      <div class="section-label"><span class="num">07</span> · Credentials</div>
+
+      <div class="work-head" style="margin-bottom: 56px">
+        <h2 class="work-title">Trained, certified, <span class="italic">and curious.</span></h2>
+      </div>
+
+      <div class="creds">
+        <div>
+          <h3>Education</h3>
+          <ul>
+            <li>
+              MBA — Marketing &amp; International Business
+              <small>Jamia Millia Islamia · 2016</small>
+            </li>
+            <li>
+              M.Tech — Computer Science
+              <small>Jamia Hamdard · 2015</small>
+            </li>
+            <li>
+              B.Tech — Information Technology
+              <small>Jamia Hamdard · 2011</small>
+            </li>
+            <li>
+              Innovation &amp; Entrepreneurship
+              <small>CODE · IIT Madras · 2024</small>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h3>Certifications</h3>
+          <ul>
+            <li>
+              SAFe 6 — APM &amp; POPM
+              <small>Scaled Agile · 2024</small>
+            </li>
+            <li>
+              Design Thinking Practitioner
+              <small>2022</small>
+            </li>
+            <li>
+              GenAI + Strategy / Finance / Marketing
+              <small>Harvard D³ · 2025</small>
+            </li>
+            <li>
+              McKinsey Forward Programme
+              <small>Future Skills · 2025</small>
+            </li>
+            <li>
+              Innovation Management
+              <small>Innovate Academy · Brussels · 2023</small>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h3>Languages &amp; Other</h3>
+          <ul>
+            <li>
+              English — Full professional
+              <small>Working language</small>
+            </li>
+            <li>
+              Dutch — A2, actively progressing
+              <small>CVO Lethas · Brussels</small>
+            </li>
+            <li>
+              Microsoft Student Partner
+              <small>2010 – 2013</small>
+            </li>
+            <li>
+              Robotics Student Partner — IIT Bombay
+              <small>2010 – 2013</small>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CONTACT ============ -->
+    <section id="contact" class="contact">
+      <div class="section-label"><span class="num">08</span> · Get in touch</div>
+
+      <h2 class="contact-line">
+        Have an <span class="italic">ambitious</span> problem<br>
+        that needs shipping?<br>
+        <a href="mailto:syedmustafaeu@gmail.com">Let's talk →</a>
+      </h2>
+
+      <div class="contact-grid">
+        <div>
+          <div class="k">Email</div>
+          <a class="v" href="mailto:syedmustafaeu@gmail.com">syedmustafaeu@gmail.com</a>
+        </div>
+        <div>
+          <div class="k">LinkedIn</div>
+          <a class="v" href="https://linkedin.com/in/syedmustafaeu" target="_blank" rel="noopener">/in/syedmustafaeu</a>
+        </div>
+        <div>
+          <div class="k">Based in</div>
+          <div class="v">Brussels, Belgium</div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="foot">
+      <div>© 2026 · Syed Mustafa Ali</div>
+      <div>Built in Brussels · Anonymised by request</div>
+      <div>v1.0 · MMXXVI</div>
+    </footer>
+
+  </main>
+</div>
+
+<!-- ============ TWEAKS PANEL ============ -->
+<aside class="tweaks" id="tweaks" aria-hidden="true">
+  <header>
+    <h4>Tweaks</h4>
+    <button class="close" id="tweakClose" aria-label="Close">×</button>
+  </header>
+
+  <div class="group">
+    <label>Theme</label>
+    <div class="swatches" id="themeSwatches">
+      <button data-theme="bone"  style="background:#F2EDE4; color:#14110F">Bone</button>
+      <button data-theme="ink"   style="background:#0E0D0C; color:#F2ECDF">Ink</button>
+      <button data-theme="paper" style="background:#FAF8F2; color:#1A1814">Paper</button>
+    </div>
+  </div>
+
+  <div class="group">
+    <label>Density</label>
+    <div class="seg" id="densitySeg">
+      <button data-density="compact">Compact</button>
+      <button data-density="default" aria-pressed="true">Default</button>
+      <button data-density="airy">Airy</button>
+    </div>
+  </div>
+
+  <div class="group">
+    <label>Hero rotation</label>
+    <div class="seg" id="rotSeg">
+      <button data-rot="on" aria-pressed="true">Rotate</button>
+      <button data-rot="off">Static</button>
+    </div>
+  </div>
+</aside>
+
+<script>
+/* ============================================================
+   SCROLL-SPY NAV
+   ============================================================ */
+(() => {
+  const sections = ['top','about','work','method','journey','recognition','credentials','contact']
+    .map(id => document.getElementById(id)).filter(Boolean);
+  const links = [...document.querySelectorAll('#nav a')];
+  const map = {
+    top: null, about: 'about', work: 'work', method: 'method',
+    journey: 'journey', recognition: 'recognition',
+    credentials: 'credentials', contact: 'contact'
+  };
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const id = e.target.id;
+        links.forEach(a => a.classList.toggle('active', a.dataset.section === id));
+      }
+    });
+  }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
+
+  sections.forEach(s => s && io.observe(s));
+})();
+
+/* ============================================================
+   REVEAL ON SCROLL
+   ============================================================ */
+(() => {
+  const targets = document.querySelectorAll(
+    '.case, .method-cell, .tl li, .stat, .creds > div, .split > div, .philosophy .cell, .about-prose p'
+  );
+  targets.forEach(t => t.classList.add('reveal'));
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { rootMargin: '0px 0px -10% 0px', threshold: 0.08 });
+
+  targets.forEach(t => io.observe(t));
+})();
+
+/* ============================================================
+   HERO ROLE ROTATOR
+   ============================================================ */
+const rotator = (() => {
+  const items = [...document.querySelectorAll('#rotator .pos')];
+  let i = 0, timer = null, on = true;
+
+  function tick() {
+    if (!on) return;
+    items.forEach(el => el.classList.remove('active'));
+    i = (i + 1) % items.length;
+    items[i].classList.add('active');
+  }
+  function start() { stop(); if (on) timer = setInterval(tick, 2400); }
+  function stop()  { if (timer) clearInterval(timer); timer = null; }
+  function setOn(v) {
+    on = !!v;
+    if (!on) {
+      stop();
+      items.forEach((el, idx) => el.classList.toggle('active', idx === 0));
+      i = 0;
+    } else {
+      start();
+    }
+  }
+  start();
+  return { setOn };
+})();
+
+/* ============================================================
+   TWEAKS PANEL
+   ============================================================ */
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "theme": "paper",
+  "density": "airy",
+  "rot": "on"
+}/*EDITMODE-END*/;
+
+const tweakState = { ...TWEAK_DEFAULTS };
+
+function applyTweaks(state) {
+  document.body.dataset.theme = state.theme;
+  document.body.dataset.density = state.density;
+  rotator.setOn(state.rot === 'on');
+
+  // update pressed states
+  document.querySelectorAll('#themeSwatches button').forEach(b =>
+    b.setAttribute('aria-pressed', b.dataset.theme === state.theme));
+  document.querySelectorAll('#densitySeg button').forEach(b =>
+    b.setAttribute('aria-pressed', b.dataset.density === state.density));
+  document.querySelectorAll('#rotSeg button').forEach(b =>
+    b.setAttribute('aria-pressed', b.dataset.rot === state.rot));
+}
+
+function setTweak(key, value) {
+  tweakState[key] = value;
+  applyTweaks(tweakState);
+  try {
+    window.parent.postMessage({ type: '__edit_mode_set_keys', edits: { [key]: value } }, '*');
+  } catch (e) {}
+}
+
+document.getElementById('themeSwatches').addEventListener('click', e => {
+  const btn = e.target.closest('button[data-theme]');
+  if (btn) setTweak('theme', btn.dataset.theme);
+});
+document.getElementById('densitySeg').addEventListener('click', e => {
+  const btn = e.target.closest('button[data-density]');
+  if (btn) setTweak('density', btn.dataset.density);
+});
+document.getElementById('rotSeg').addEventListener('click', e => {
+  const btn = e.target.closest('button[data-rot]');
+  if (btn) setTweak('rot', btn.dataset.rot);
+});
+
+// Host protocol
+const tweaksEl = document.getElementById('tweaks');
+window.addEventListener('message', (ev) => {
+  const t = ev.data && ev.data.type;
+  if (t === '__activate_edit_mode') {
+    tweaksEl.classList.add('open');
+    tweaksEl.setAttribute('aria-hidden', 'false');
+  } else if (t === '__deactivate_edit_mode') {
+    tweaksEl.classList.remove('open');
+    tweaksEl.setAttribute('aria-hidden', 'true');
+  }
+});
+
+document.getElementById('tweakClose').addEventListener('click', () => {
+  tweaksEl.classList.remove('open');
+  tweaksEl.setAttribute('aria-hidden', 'true');
+  try { window.parent.postMessage({ type: '__edit_mode_dismissed' }, '*'); } catch (e) {}
+});
+
+// Apply defaults + announce availability
+applyTweaks(tweakState);
+try { window.parent.postMessage({ type: '__edit_mode_available' }, '*'); } catch (e) {}
+</script>
+
+</body>
+</html>
